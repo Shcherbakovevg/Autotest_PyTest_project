@@ -8,7 +8,7 @@ class ProductPage(BasePage):
     def add_item_to_cart(self):
         self.should_be_add_to_cart_button()
         self.click_add_to_cart_button()
-        #self.solve_allert_quiz()
+        self.solve_allert_quiz()
 
     def should_be_add_to_cart_button(self):
         assert self.is_element_present(*ProductPageLocators.ADD_TO_CART_BUTTON), "Add to cart button not found"
