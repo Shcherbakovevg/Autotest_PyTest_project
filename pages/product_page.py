@@ -8,7 +8,7 @@ class ProductPage(BasePage):
     def add_item_to_cart(self):
         self.should_be_add_to_cart_button()
         self.click_add_to_cart_button()
-        self.solve_allert_quiz()
+        #self.solve_allert_quiz()
 
     def should_be_add_to_cart_button(self):
         assert self.is_element_present(*ProductPageLocators.ADD_TO_CART_BUTTON), "Add to cart button not found"
@@ -50,3 +50,9 @@ class ProductPage(BasePage):
         Product_price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
         Cart_price = self.browser.find_element(*ProductPageLocators.CART_PRICE).text
         assert Product_price == Cart_price, "Product price not equal" 
+
+    def test_guest_cant_see_success_message(self):
+        assert self.is_not_element_present(*ProductPageLocators.SUCCESS_ADDED_ITEM_MESSAGE), "Success message is present, but should not be"
+
+    def test_success_message_disappeared(self):
+        assert self.is_disappeared(*ProductPageLocators.SUCCESS_ADDED_ITEM_MESSAGE), "Success message don't desappeared"
