@@ -14,6 +14,7 @@ class TestUserAddToBasketFromProductPage():
     
     @pytest.fixture(scope="function", autouse=True)
     def setup(self, browser):
+        browser.delete_all_cookies()
         self.letters = string.ascii_lowercase
         self.rand_email = ''.join(random.choice(self.letters) for i in range(8)) + '@gmail.com'
         self.rand_password = ''.join(random.choice(self.letters) for i in range(9))
@@ -42,6 +43,7 @@ class TestUserAddToBasketFromProductPage():
                          pytest.param("?promo=offer7", marks=pytest.mark.xfail(reason="bug on a temporary promo page")),
                          "?promo=offer8", "?promo=offer9"])
 def test_guest_can_add_product_to_basket(browser, promo_link):
+    browser.delete_all_cookies()
     url = link + promo_link
     page = ProductPage(browser, url)
     page.open()
@@ -53,6 +55,7 @@ def test_guest_can_add_product_to_basket(browser, promo_link):
 
 @pytest.mark.xfail
 def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
+    browser.delete_all_cookies()
     page = ProductPage(browser, link)
     page.open()
     page.should_be_add_to_cart_button()
@@ -60,12 +63,14 @@ def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
     page.test_guest_cant_see_success_message()
 
 def test_guest_cant_see_success_message(browser):
+    browser.delete_all_cookies()
     page = ProductPage(browser, link)
     page.open()
     page.test_guest_cant_see_success_message()
 
 @pytest.mark.xfail
 def test_message_disappeared_after_adding_product_to_basket(browser):
+    browser.delete_all_cookies()
     page = ProductPage(browser, link)
     page.open()
     page.should_be_add_to_cart_button()
@@ -89,6 +94,7 @@ def test_guest_can_go_to_login_page_from_product_page(browser):
 
 @pytest.mark.need_review
 def test_guest_cant_see_product_in_basket_opened_from_product_page(browser):
+    browser.delete_all_cookies()
     page = ProductPage(browser, link)
     page.open()
     page.go_to_basket_page()
